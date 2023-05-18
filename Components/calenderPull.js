@@ -1,10 +1,10 @@
 //firebase
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet,Text,Button,Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import moment from 'moment';
 
-export default class CalendarExample extends React.Component {
+
+export default class CalendarPull extends React.Component {
     state = {
         markedDates: {},
         isStartDatePicked: false,
@@ -24,18 +24,27 @@ export default class CalendarExample extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Calendar
+                <Text>calender pull</Text>
+                <Calendar style={styles.calendario}
                     markedDates={this.state.markedDates}
                     markingType="period"
                     onDayPress={this.onDayPress}
                 />
+            <Button
+            title='subir'
+            onPress={()=>this.props.navigation.navigate('Bajar')}
+            />
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
+    calendario: {
+        position: 'relative',
+        width: Dimensions.get('window').width - 100,
+        top: 30,
+    },container: {
         flex: 1,
         backgroundColor: 'rgba(52, 52, 52, 0.8)',
         padding: 20,
