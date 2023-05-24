@@ -10,14 +10,14 @@ const Stack= createStackNavigator();
 export default class App extends React.Component {
     render() {
         return (
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen
-                    name='Subir'
+            <NavigationContainer >
+                <Stack.Navigator >
+                    <Stack.Screen 
+                    name='Calendario'
                     component={CalePull}
                     />
                     <Stack.Screen
-                    name='Bajar'
+                    name='Actividades'
                     component={CalePush}
                     />
                 </Stack.Navigator>
