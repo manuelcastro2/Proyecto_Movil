@@ -4,21 +4,21 @@ import { View, StyleSheet,Button,Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 
-export default class CalendarPull extends React.Component {
+const Calendario=({navigation})=> {
     
-    render() {
+
         return (
             <View style={styles.container}>
                 <Calendar style={styles.calendario}
                 />
                 <Button style={styles.boton}
                     title='Actividades'
-                    onPress={() => this.props.navigation.navigate('Actividades')}
+                    onPress={() => navigation.navigate('Actividades')}
                 />
             </View>
-        );
-    }
+        )
 }
+export default Calendario;
 
 const styles = StyleSheet.create({
     calendario: {
