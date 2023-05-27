@@ -1,7 +1,8 @@
 //firebase
-import * as React from 'react';
+import React from 'react';
 import { View, StyleSheet,Button,Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+
 
 
 const Calendario=({navigation})=> {

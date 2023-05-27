@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Calendario from './Components/calenderPull'
 import Actividades from './Components/CalenderPush'
 
+
 const Stack= createStackNavigator();
 
 const App=()=> {
@@ -23,6 +24,7 @@ const App=()=> {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
+            
         );
     }
 export default App;
