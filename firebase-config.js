@@ -1,3 +1,4 @@
+import { initializeApp } from 'firebase/app';
 // Import the functions you need from the SDKs you need
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -13,3 +14,4 @@ export const firebaseConfig = {
   appId: "1:169970087056:web:091ce3344d5f05725b5415"
 };
 
+initializeApp(firebaseConfig);

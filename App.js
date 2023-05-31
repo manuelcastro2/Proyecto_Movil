@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Calendario from './Components/calenderPull'
 import Actividades from './Components/CalenderPush'
+import Data from './Components/baseDeDatos'
 
 
 const Stack= createStackNavigator();
@@ -21,6 +22,10 @@ const App=()=> {
                     <Stack.Screen
                     name='Actividades'
                     component={Actividades}
+                    />
+                    <Stack.Screen
+                    name='Data'
+                    component={Data}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

@@ -16,6 +16,11 @@ const Calendario=({navigation})=> {
                     title='Actividades'
                     onPress={() => navigation.navigate('Actividades')}
                 />
+
+                <Button style={styles.boton}
+                    title='data'
+                    onPress={() => navigation.navigate('Data')}
+                />
             </View>
         )
 }
