@@ -1,28 +1,35 @@
 //firebase
-import React from 'react';
+import React,{useState} from 'react';
 import { View, StyleSheet,Button,Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 
 
 const Calendario=({navigation})=> {
-    
-
-        return (
-            <View style={styles.container}>
-                <Calendar style={styles.calendario}
+        const [selected, setSelected] = useState('');
+    const Enviar=()=> {
+        console.log(selected);
+       navigation.navigate('Navegacion')
+    }
+    const handleChangeText = text => {
+        setNombre(text)
+      }
+    return (
+        <View style={styles.container}>
+            <Calendar style={styles.calendario}
+                onDayPress={day => {
+                    setSelected(day.dateString)
+                }}
+                markedDates={{
+                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                }}
+            />
+            
+                <Button title='Enviar' style={styles.boton}
+                onPress={Enviar}
                 />
-                <Button style={styles.boton}
-                    title='Actividades'
-                    onPress={() => navigation.navigate('Actividades')}
-                />
-
-                <Button style={styles.boton}
-                    title='data'
-                    onPress={() => navigation.navigate('Data')}
-                />
-            </View>
-        )
+        </View>
+    );
 }
 export default Calendario;
 

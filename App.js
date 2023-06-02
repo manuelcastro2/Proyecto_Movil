@@ -3,35 +3,38 @@ import { View, StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Calendario from './Components/calenderPull'
-import Actividades from './Components/CalenderPush'
-import Data from './Components/baseDeDatos'
+import Navegacion from './Components/CalenderPush'
+import Meta from './Components/mETA'
+import login from './Components/Login'
 
+const Stack = createStackNavigator();
 
-const Stack= createStackNavigator();
+const App = () => {
 
-const App=()=> {
-
-        return (
-            <NavigationContainer >
-                <Stack.Navigator >
-                    <Stack.Screen 
+    return (
+        <NavigationContainer >
+            <Stack.Navigator >
+                <Stack.Screen
+                    name='Login'
+                    component={login}
+                />
+                <Stack.Screen
+                    name='Navegacion'
+                    component={Navegacion}
+                />
+                <Stack.Screen
+                    name='Meta'
+                    component={Meta}
+                />
+                <Stack.Screen
                     name='Calendario'
                     component={Calendario}
-                    
-                    />
-                    <Stack.Screen
-                    name='Actividades'
-                    component={Actividades}
-                    />
-                    <Stack.Screen
-                    name='Data'
-                    component={Data}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
-            
-        );
-    }
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+
+    );
+}
 export default App;
 
 const styles = StyleSheet.create({
