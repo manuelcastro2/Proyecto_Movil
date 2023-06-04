@@ -28,8 +28,33 @@ const llamadoData = ({ navigation }) => {
   };
 
 
+  const fetchAllGoals = async (correo) => {
+    try {
+      const firestore = getFirestore();
+      const metasCollection = collection(firestore, 'test');
+      const metasQuery = query(metasCollection, where('correo', '==', correo),  where('flagMeta', '==', '1') );
+      const querySnapshot = await getDocs(metasQuery);
+
+      const metas = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setGoals(metas);
+      
+    } catch (error) {
+      console.log('Error al obtener los datos de los usuarios: ', error);
+    }
+
+    console.log('Las metas son : ', goals )
+
+
+  };
+
+
   const [correo, setCorreo] = useState('');
   const [meta, setMeta] = useState('');
+  const [goals, setGoals] = useState('');
 
   const clearInputs = () => {
     setCorreo('');
@@ -55,6 +80,7 @@ const llamadoData = ({ navigation }) => {
       />
 
       <Button title='send data' onPress={() => sendDataToFirebase(correo, meta)}></Button>
+      <Button title='consultarMeta' onPress={() => fetchAllGoals(correo)}></Button>
 
     </View>
   )
