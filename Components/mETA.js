@@ -4,11 +4,13 @@ import { StyleSheet, Text, View, Button, TextInput, Alert, FlatList, Modal, Pres
 import { initializeApp } from 'firebase/app';
 import { getFirestore, setDoc, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
 import firebase from '../firebase-config';
+import Correo from './Correo';
+
 
 
 const llamadoData = ({ navigation }) => {
 
-  const sendDataToFirebase = async (correo, meta) => {
+  const sendDataToFirebase = async (meta) => {
     try {
 
       const idDocumento = correo + "_" + meta;
@@ -28,7 +30,8 @@ const llamadoData = ({ navigation }) => {
   };
 
 
-  const fetchAllGoals = async (correo) => {
+  const fetchAllGoals = async () => {
+    
     try {
       const firestore = getFirestore();
       const metasCollection = collection(firestore, 'test');
@@ -52,12 +55,12 @@ const llamadoData = ({ navigation }) => {
   };
 
 
-  const [correo, setCorreo] = useState('');
+  const [correo, setCorreo] = useState(Correo.obtenerCorreo());
   const [meta, setMeta] = useState('');
   const [goals, setGoals] = useState('');
 
   const clearInputs = () => {
-    setCorreo('');
+  
     setMeta('');
   
   };
@@ -65,12 +68,7 @@ const llamadoData = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="correo"
-        onChangeText={(text) => setCorreo(text)}
-        value={correo}
-      />
+      
 
       <TextInput
         style={styles.input}
@@ -79,8 +77,8 @@ const llamadoData = ({ navigation }) => {
         value={meta}
       />
 
-      <Button title='send data' onPress={() => sendDataToFirebase(correo, meta)}></Button>
-      <Button title='consultarMeta' onPress={() => fetchAllGoals(correo)}></Button>
+      <Button title='send data' onPress={() => sendDataToFirebase( meta)}></Button>
+      <Button title='consultarMeta' onPress={() => fetchAllGoals()}></Button>
 
     </View>
   )
