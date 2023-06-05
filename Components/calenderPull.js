@@ -16,7 +16,7 @@ const Calendario = ({ navigation }) => {
 
             const firestore = getFirestore();
             const metasCollection = collection(firestore, 'test');
-            const metasQuery = query(metasCollection, where('correo', '==', correo), where('Meta', '==', '1'));
+            const metasQuery = query(metasCollection, where('correo', '==', correo), where('flagMeta', '==', '1'));
             const querySnapshot = await getDocs(metasQuery);
 
             const metas = querySnapshot.docs.map((doc) => ({
@@ -32,6 +32,7 @@ const Calendario = ({ navigation }) => {
         console.log(selected);
         console.log('Las metas son : ', goals )
         console.log('Las metas solas son : ', goalsOnly)
+        return goalsOnly;
     };
 
     const [goals, setGoals] = useState('');
