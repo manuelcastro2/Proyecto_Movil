@@ -33,6 +33,7 @@ const llamadoData = ({ navigation }) => {
   const fetchAllGoals = async () => {
     
     try {
+      
       const firestore = getFirestore();
       const metasCollection = collection(firestore, 'test');
       const metasQuery = query(metasCollection, where('correo', '==', correo),  where('flagMeta', '==', '1') );
@@ -44,12 +45,14 @@ const llamadoData = ({ navigation }) => {
       }));
 
       setGoals(metas);
+      setGoalsOnly(goals.map((dato) => dato.meta));
       
     } catch (error) {
       console.log('Error al obtener los datos de los usuarios: ', error);
     }
 
     console.log('Las metas son : ', goals )
+    console.log('Las metas solas son : ', goalsOnly )
 
 
   };
@@ -58,6 +61,7 @@ const llamadoData = ({ navigation }) => {
   const [correo, setCorreo] = useState(Correo.obtenerCorreo());
   const [meta, setMeta] = useState('');
   const [goals, setGoals] = useState('');
+  const [goalsOnly, setGoalsOnly] = useState('');
 
   const clearInputs = () => {
   
