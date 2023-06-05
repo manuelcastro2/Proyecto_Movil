@@ -21,6 +21,12 @@ const Actividades = ({ navigation }) => {
                     onPress={() => navigation.navigate('Meta')}
                 />
             </View>
+            <View style={styles.botonMeta}>
+                <Button style={styles.boton}
+                    title='Objetivos'
+                    onPress={() => navigation.navigate('Objetivos')}
+                />
+            </View>
         </View>
     );
 }

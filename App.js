@@ -6,6 +6,7 @@ import Calendario from './Components/calenderPull'
 import Navegacion from './Components/CalenderPush'
 import Meta from './Components/mETA'
 import login from './Components/Login'
+import Objetivos from './Components/Objetivos'
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,10 @@ const App = () => {
                 <Stack.Screen
                     name='Calendario'
                     component={Calendario}
+                />
+                <Stack.Screen
+                    name='Objetivos'
+                    component={Objetivos}
                 />
             </Stack.Navigator>
         </NavigationContainer>
