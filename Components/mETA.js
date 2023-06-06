@@ -18,7 +18,8 @@ const llamadoData = ({ navigation }) => {
       await setDoc(doc(firestore, 'test', idDocumento), {
         correo: correo,
         meta: meta,
-        flagMeta : '1'
+        flagMeta : '1',
+        estado:'false',
       });
       console.log('Datos guardados en Firebase exitosamente.');
       console.log(idDocumento);
@@ -82,7 +83,6 @@ const llamadoData = ({ navigation }) => {
       />
 
       <Button title='send data' onPress={() => sendDataToFirebase( meta)}></Button>
-      <Button title='consultarMeta' onPress={() => fetchAllGoals()}></Button>
 
     </View>
   )

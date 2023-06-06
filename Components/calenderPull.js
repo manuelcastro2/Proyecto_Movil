@@ -1,6 +1,6 @@
 //firebase
 import React, { useState } from 'react';
-import { View, StyleSheet, Button, Dimensions, FlatList, Text } from 'react-native';
+import { View, StyleSheet, Button, Dimensions, FlatList, TextInput } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, setDoc, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
@@ -30,7 +30,7 @@ const Calendario = ({ navigation }) => {
             console.log('Error al obtener los datos de los usuarios: ', error);
         }
         console.log(selected);
-        console.log('Las metas son : ', goals )
+        console.log('Las metas son : ', goals)
         console.log('Las metas solas son : ', goalsOnly)
         return goalsOnly;
     };
@@ -38,7 +38,35 @@ const Calendario = ({ navigation }) => {
     const [goals, setGoals] = useState('');
     const [correo, setCorreo] = useState(Correo.obtenerCorreo());
     const [goalsOnly, setGoalsOnly] = useState('');
+    const [estadoO, setEstado] = useState('');
+    const aprobado = () => {
+        setEstado('true')
+    }
 
+    const Noaprobado = () => {
+        setEstado('false')
+    }
+
+    const sendDataToFirebase = async (meta) => {
+        try {
+
+            const idDocumento = correo + "_" + selected + "_" + meta;
+            const firestore = getFirestore();
+            await setDoc(doc(firestore, 'test', idDocumento), {
+                correo: correo,
+                meta: meta,
+                flagMeta: '1',
+                estado: 'true'
+            });
+            console.log('Datos guardados en Firebase exitosamente.');
+            console.log(idDocumento);
+            // Aquí puedes añadir cualquier otra acción que desees realizar después de guardar los datos.
+        } catch (error) {
+            console.log('Error al guardar los datos: ', error);
+        }
+        clearInputs();
+    };
+    const [meta, setMeta] = useState('');
     return (
         <View style={styles.container}>
             <Calendar style={styles.calendario}
@@ -50,13 +78,22 @@ const Calendario = ({ navigation }) => {
                 }}
             />
 
-            <Button title='Enviar' style={styles.boton}
-                onPress={()=>fetchAllGoals()}
+            <Button title='MOSTRAR METAS' style={styles.boton}
+                onPress={() => fetchAllGoals()}
             />
 
             <FlatList style={styles.lista}
-                renderItem={({ goalsOnly }) => <Text>{goalsOnly}</Text>}
-                keyExtractor={goalsOnly => goalsOnly}
+                data={goals}
+                renderItem={({ item }) =>
+                    <View style={styles.impresion}>
+                        <View style={styles.direccion}>
+                            <View style={styles.contenedor}><TextInput  value={item.meta} onChangeText={(text)=>setMeta(text)} /></View>
+                            <View style={styles.contenedores}><Button onPress={aprobado} title='/'></Button></View>
+                            <View style={styles.contenedores}><Button onPress={Noaprobado} title='X'></Button></View>
+                            <View style={styles.contenedor}><Button onPress={()=>sendDataToFirebase(meta)} title='Enviar'></Button></View>
+                        </View>
+                    </View>}
+                keyExtractor={item => item.meta}
             />
         </View>
     );
@@ -68,7 +105,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         width: Dimensions.get('window').width - 25,
         justifyContent: 'flex-start',
-        top: 10,
+        top: -5,
     }, container: {
         flex: 1,
         backgroundColor: 'rgba(240, 240, 240, 0.8)',
@@ -84,8 +121,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#3a12ae'
     },
     lista: {
-        height: Dimensions.get('window').height-105,
-        width: Dimensions.get('window').width-20,
-        backgroundColor:'#aaaa'
+        position: 'relative',
+        top: 5,
+        height: Dimensions.get('window').height - 105,
+        width: Dimensions.get('window').width - 100,
+        backgroundColor: 'white',
+        borderRadius: 26
     },
+    impresion: {
+        width: Dimensions.get('window').width - 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 20,
+    }, direccion: {
+        flexDirection: 'row',
+        height: 50,
+        position: 'relative',
+        top: 20,
+        gap: 5,
+    },
+    contenedor: {
+        width: 80
+    },
+    contenedores: {
+        width: 30
+    }
 });
