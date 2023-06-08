@@ -35,7 +35,7 @@ const Calendario = ({ navigation }) => {
         return goalsOnly;
     };
 
-    const [goals, setGoals] = useState('');
+    const [goals, setGoals] = useState([]);
     const [correo, setCorreo] = useState(Correo.obtenerCorreo());
     const [goalsOnly, setGoalsOnly] = useState('');
     const [estadoO, setEstado] = useState('');
@@ -55,8 +55,8 @@ const Calendario = ({ navigation }) => {
             await setDoc(doc(firestore, 'test', idDocumento), {
                 correo: correo,
                 meta: meta,
-                flagMeta: '1',
-                estado: 'true'
+                estado: estadoO,
+                fecha: selected
             });
             console.log('Datos guardados en Firebase exitosamente.');
             console.log(idDocumento);
@@ -64,9 +64,9 @@ const Calendario = ({ navigation }) => {
         } catch (error) {
             console.log('Error al guardar los datos: ', error);
         }
-        clearInputs();
     };
-    const [meta, setMeta] = useState('');
+    const [meta, setMeta] = useState([]);
+    console.log(meta)
     return (
         <View style={styles.container}>
             <Calendar style={styles.calendario}
@@ -87,13 +87,13 @@ const Calendario = ({ navigation }) => {
                 renderItem={({ item }) =>
                     <View style={styles.impresion}>
                         <View style={styles.direccion}>
-                            <View style={styles.contenedor}><TextInput  value={item.meta} onChangeText={(text)=>setMeta(text)} /></View>
-                            <View style={styles.contenedores}><Button onPress={aprobado} title='/'></Button></View>
-                            <View style={styles.contenedores}><Button onPress={Noaprobado} title='X'></Button></View>
-                            <View style={styles.contenedor}><Button onPress={()=>sendDataToFirebase(meta)} title='Enviar'></Button></View>
+                            <View style={styles.contenedor}><TextInput value={item.meta} onChangeText={setMeta(item.meta)} /></View>
+                            <View style={styles.contenedores}><Button onPress={aprobado} title='si'></Button></View>
+                            <View style={styles.contenedores}><Button onPress={Noaprobado} title='no'></Button></View>
+                            <View style={styles.contenedor}><Button onPress={() => sendDataToFirebase(meta)} title='Enviar'></Button></View>
                         </View>
-                    </View>}
-                keyExtractor={item => item.meta}
+                    </View>
+                }
             />
         </View>
     );
@@ -144,6 +144,6 @@ const styles = StyleSheet.create({
         width: 80
     },
     contenedores: {
-        width: 30
+        width: 40
     }
 });
